@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Ywxt.Opera.MPlayer
 {
@@ -28,7 +29,7 @@ namespace Ywxt.Opera.MPlayer
             };
 
             Console.WriteLine("Press enter to exit...");
-            Console.ReadLine();
+            Thread.Sleep(Timeout.Infinite);
         }
 
         private static void Control(Player player, NesParser nes, ControllerKey key)

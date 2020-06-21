@@ -20,9 +20,9 @@ namespace Ywxt.Opera.MPlayer
 
         public Player()
         {
-            var handle = (int) System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            //var handle = (int) Process.GetCurrentProcess().MainWindowHandle;
 
-            _mPlayer = new LibMPlayerCommon.MPlayer(handle, MplayerBackends.SDL,
+            _mPlayer = new LibMPlayerCommon.MPlayer(0, MplayerBackends.SDL,
                 @"mplayer");
             _mPlayer.CurrentPosition += OnCurrentPosition;
             // _mPlayer.VideoExited += OnVideoExited;
