@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,11 +25,30 @@ namespace Ywxt.Opera.MPlayer
             _mPlayer = new LibMPlayerCommon.MPlayer(handle, MplayerBackends.SDL,
                 @"mplayer");
             _mPlayer.CurrentPosition += OnCurrentPosition;
-            _mPlayer.VideoExited += OnVideoExited;
+            // _mPlayer.VideoExited += OnVideoExited;
+            _mPlayer.MplayerOutput += OnVideoExited;
+
 
             RefreshFiles();
             SaveProgress();
         }
+
+        private void OnVideoExited(object sender, DataReceivedEventArgs e)
+        {
+            if (!e.Data.Equals("EOF code: 1  ", StringComparison.Ordinal)) return;
+            Console.WriteLine("======================");
+            Console.WriteLine("播放结束");
+            PlayNext();
+        }
+
+        // private void OnOutput(object sender, DataReceivedEventArgs e)
+        // {
+        //     if (e.Data.Contains("exit", StringComparison.InvariantCultureIgnoreCase) ||
+        //         e.Data.Contains("eof", StringComparison.InvariantCultureIgnoreCase))
+        //     {
+        //         Console.WriteLine(e.Data);
+        //     }
+        // }
 
         private void SaveProgress()
         {
@@ -41,11 +61,6 @@ namespace Ywxt.Opera.MPlayer
                 }
             }, TaskCreationOptions.LongRunning);
             task.Start();
-        }
-
-        private void OnVideoExited(object sender, MplayerEvent e)
-        {
-            PlayNext();
         }
 
         private void OnCurrentPosition(object sender, MplayerEvent e)

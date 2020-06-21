@@ -62,6 +62,7 @@ namespace Ywxt.Opera.MPlayer
                     case ControllerKey.Star:
                         break;
                     case ControllerKey.Sharp:
+                        NesUtil.Shutdown(player, nes);
                         break;
                     case ControllerKey.Up:
                         player.PlayPrevious();

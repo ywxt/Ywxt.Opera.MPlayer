@@ -49,6 +49,7 @@ namespace Ywxt.Opera.MPlayer
         public static void Shutdown(Player player,NesParser parser)
         {
             player.Finish();
+            player.Dispose();
             parser.Dispose();
             Process.Start("sudo","shutdown -h now");
         }
